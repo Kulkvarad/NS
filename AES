@@ -7,7 +7,6 @@ public class Main {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128);
             SecretKey key = keyGen.generateKey();
-
             String message = "Hi, this is AES Encryption!";
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key);
