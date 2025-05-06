@@ -4,26 +4,20 @@ import java.util.Base64;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Generate AES key
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128);
             SecretKey key = keyGen.generateKey();
 
             String message = "Hi, this is AES Encryption!";
-
-            // Encrypt
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encryptedBytes = cipher.doFinal(message.getBytes());
             String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
             System.out.println("Encrypted: " + encryptedText);
-
-            // Decrypt
             cipher.init(Cipher.DECRYPT_MODE, key);
             byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
             String decryptedText = new String(decryptedBytes);
             System.out.println("Decrypted: " + decryptedText);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
