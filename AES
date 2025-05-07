@@ -1,24 +1,23 @@
-import javax.crypto.*;
-import java.util.Base64;
+# exp 1 password
+import re
+def check_password_strength(password):
+    if len(password) < 8:
+        return "Too short! (Min 8 characters)"
+    if len(password) > 12:
+        return "Too long! (Max 12 characters)"
+    score = 0
+    if re.search(r'[a-z]', password): score += 25
+    if re.search(r'[A-Z]', password): score += 25
+    if re.search(r'\d', password): score += 25
+    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password): score += 25
+    if score == 100:
+        return "Your password is 100% secure. Well done!"
+    else:
+        return f"Your password is {score}% secure. Try again."
+pwd = input("Enter your password: ")
+confirm_pwd = input("Confirm your password: ")
 
-public class Main {
-    public static void main(String[] args) {
-        try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            keyGen.init(128);
-            SecretKey key = keyGen.generateKey();
-            String message = "Hi, this is AES Encryption!";
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            byte[] encryptedBytes = cipher.doFinal(message.getBytes());
-            String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
-            System.out.println("Encrypted: " + encryptedText);
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
-            String decryptedText = new String(decryptedBytes);
-            System.out.println("Decrypted: " + decryptedText);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
+if pwd != confirm_pwd:
+    print("Passwords do not match. Please try again.")
+else:
+    print(check_password_strength(pwd))
