@@ -1,0 +1,24 @@
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        String key = "12345678";
+        String msg = "Hello my name is Varad.K";
+        System.out.println("Original: " + msg);
+
+        Cipher c = Cipher.getInstance("DES/ECB/NoPadding");
+        SecretKeySpec k = new SecretKeySpec(key.getBytes(), "DES");
+
+        while (msg.length() % 8 != 0) msg += " ";
+
+        c.init(Cipher.ENCRYPT_MODE, k);
+        String enc = Base64.getEncoder().encodeToString(c.doFinal(msg.getBytes()));
+        System.out.println("Encrypted: " + enc);
+
+        c.init(Cipher.DECRYPT_MODE, k);
+        String dec = new String(c.doFinal(Base64.getDecoder().decode(enc))).strip();
+        System.out.println("Decrypted: " + dec);
+    }
+}
