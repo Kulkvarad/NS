@@ -1,0 +1,14 @@
+#exp 5 asymmetric RSA
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
+import base64
+key_pair = RSA.generate(2048)
+public_key = key_pair.publickey()
+cipher_rsa = PKCS1_OAEP.new(public_key)
+message = "Hello my name is Varad"
+encrypted = cipher_rsa.encrypt(message.encode())
+encrypted_b64 = base64.b64encode(encrypted).decode()
+print("Encrypted:", encrypted_b64)
+decipher_rsa = PKCS1_OAEP.new(key_pair)
+decrypted = decipher_rsa.decrypt(base64.b64decode(encrypted_b64)).decode()
+print("Decrypted:", decrypted)
