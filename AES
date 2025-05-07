@@ -1,23 +1,23 @@
-# exp 1 password
-import re
-def check_password_strength(password):
-    if len(password) < 8:
-        return "Too short! (Min 8 characters)"
-    if len(password) > 12:
-        return "Too long! (Max 12 characters)"
-    score = 0
-    if re.search(r'[a-z]', password): score += 25
-    if re.search(r'[A-Z]', password): score += 25
-    if re.search(r'\d', password): score += 25
-    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password): score += 25
-    if score == 100:
-        return "Your password is 100% secure. Well done!"
-    else:
-        return f"Your password is {score}% secure. Try again."
-pwd = input("Enter your password: ")
-confirm_pwd = input("Confirm your password: ")
+!pip install pycryptodome
+from Crypto.Cipher import AES
 
-if pwd != confirm_pwd:
-    print("Passwords do not match. Please try again.")
-else:
-    print(check_password_strength(pwd))
+def pad(text):
+    while len(text) % 16 != 0:
+        text += ' '
+    return text
+def encrypt(message, key):
+    cipher = AES.new(key.encode(), AES.MODE_ECB)
+    padded_msg = pad(message)
+    encrypted = cipher.encrypt(padded_msg.encode())
+    return encrypted
+def decrypt(encrypted, key):
+    cipher = AES.new(key.encode(), AES.MODE_ECB)
+    decrypted = cipher.decrypt(encrypted).decode()
+    return decrypted.strip()
+
+
+msg = "HelloWorld"
+key = "1234567890abcdef"  # 16 characters
+enc = encrypt(msg, key)
+print("Encrypted:", enc)
+print("Decrypted:", decrypt(enc, key))
