@@ -1,0 +1,22 @@
+#exp 6 DES
+def permute(bits, order):
+    return ''.join(bits[i - 1] for i in order)
+def shift_left(bits, count):
+    return bits[count:] + bits[:count]
+def generate_keys(key10):
+    P10 = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]
+    P8 = [6, 3, 7, 4, 8, 5, 10, 9]
+    key_p10 = permute(key10, P10)
+    left, right = key_p10[:5], key_p10[5:]
+    left1 = shift_left(left, 1)
+    right1 = shift_left(right, 1)
+    K1 = permute(left1 + right1, P8)
+    left2 = shift_left(left1, 2)
+    right2 = shift_left(right1, 2)
+    K2 = permute(left2 + right2, P8)
+    return K1, K2
+key10 = "1101100101"
+k1, k2 = generate_keys(key10)
+print("Original 10-bit key:", key10)
+print("Generated Key 1 (K1):", k1)
+print("Generated Key 2 (K2):", k2)
