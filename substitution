@@ -1,0 +1,12 @@
+def encrypt(text, key):
+    result = ''
+    for c in text.upper():
+        if c.isalpha():
+            result += key[ord(c) - ord('A')]
+        else:
+            result += c
+    return result
+key = "QWERTYUIOPASDFGHJKLZXCVBNM"
+plain = input("Enter plain text: ")
+cipher = encrypt(plain, key)
+print("Cipher text:",cipher)
