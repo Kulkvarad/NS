@@ -1,0 +1,10 @@
+#exp 3 transposition
+def encrypt(msg):
+    return msg[::-1]
+def decrypt(msg):
+    return msg[::-1]
+text = "HELLO"
+enc = encrypt(text)
+dec = decrypt(enc)
+print("Encrypted:", enc)
+print("Decrypted:", dec)
