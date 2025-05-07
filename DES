@@ -1,26 +1,18 @@
-public class Main {
-    public static void main(String[] args) {
-        String key10 = "1101100101"; 
-        int[] P10 = {3, 5, 2, 7, 4, 10, 1, 9, 8, 6};
-        String permuted = permute(key10, P10);
-        String left = permuted.substring(0, 5);
-        String right = permuted.substring(5);
-        left = leftShift(left, 1);
-        right = leftShift(right, 1);
-        String K1 = permute(left + right, new int[]{6, 3, 7, 4, 8, 5, 10, 9});
-        left = leftShift(left, 2);
-        right = leftShift(right, 2);
-        String K2 = permute(left + right, new int[]{6, 3, 7, 4, 8, 5, 10, 9});
-
-        System.out.println("K1: " + K1);
-        System.out.println("K2: " + K2);
-    }
-    static String permute(String input, int[] order) {
-        StringBuilder result = new StringBuilder();
-        for (int i : order) result.append(input.charAt(i - 1));
-        return result.toString();
-    }
-    static String leftShift(String s, int n) {
-        return s.substring(n) + s.substring(0, n);
-    }
-}
+#exp 5 symmetric DES
+!pip install pycryptodome
+from Crypto.Cipher import DES
+import base64
+def encrypt(data, key):
+    cipher = DES.new(key.encode(), DES.MODE_ECB)
+    encrypted_data = cipher.encrypt(data.ljust(8).encode())
+    return base64.b64encode(encrypted_data).decode()
+def decrypt(encrypted_data, key):
+    cipher = DES.new(key.encode(), DES.MODE_ECB)
+    decrypted_data = cipher.decrypt(base64.b64decode(encrypted_data)).decode().strip()
+    return decrypted_data
+key = "12345678"
+data = "Hello"
+encrypted = encrypt(data, key)
+decrypted = decrypt(encrypted, key)
+print("Encrypted:", encrypted)
+print("Decrypted:", decrypted)
