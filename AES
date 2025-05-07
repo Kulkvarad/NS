@@ -1,5 +1,7 @@
+#exp 7 AES
 !pip install pycryptodome
 from Crypto.Cipher import AES
+
 def pad(text):
     while len(text) % 16 != 0:
         text += ' '
