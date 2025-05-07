@@ -1,6 +1,5 @@
 !pip install pycryptodome
 from Crypto.Cipher import AES
-
 def pad(text):
     while len(text) % 16 != 0:
         text += ' '
@@ -14,10 +13,8 @@ def decrypt(encrypted, key):
     cipher = AES.new(key.encode(), AES.MODE_ECB)
     decrypted = cipher.decrypt(encrypted).decode()
     return decrypted.strip()
-
-
 msg = "HelloWorld"
-key = "1234567890abcdef"  # 16 characters
+key = "1234567890abcdef"
 enc = encrypt(msg, key)
 print("Encrypted:", enc)
 print("Decrypted:", decrypt(enc, key))
