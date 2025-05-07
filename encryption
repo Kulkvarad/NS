@@ -1,28 +1,15 @@
-import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Message: ");
-        String msg = sc.nextLine();
-        System.out.print("Shift: ");
-        int shift = sc.nextInt();
-
-        String enc = caesar(msg, shift);
-        String dec = caesar(enc, 26 - shift);
-
-        System.out.println("Encrypted: " + enc);
-        System.out.println("Decrypted: " + dec);
-    }
-    static String caesar(String text, int shift) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : text.toCharArray()) {
-            if (Character.isLowerCase(c))
-                sb.append((char) ('a' + (c - 'a' + shift) % 26));
-            else if (Character.isUpperCase(c))
-                sb.append((char) ('A' + (c - 'A' + shift) % 26));
-            else
-                sb.append(c);
-        }
-        return sb.toString();
-    }
-}
+def caesar(text, shift):
+    result = ''
+    for c in text:
+        if c.isalpha():
+            base = ord('a') if c.islower() else ord('A')
+            result += chr((ord(c) - base + shift) % 26 + base)
+        else:
+            result += c
+    return result
+msg = input("Enter message: ")
+shift = int(input("Enter shift: "))
+enc = caesar(msg, shift)
+dec = caesar(enc, 26 - shift % 26)
+print("Encrypted:",enc)
+print("Decrypted:",dec)
